@@ -12,9 +12,9 @@ namespace Comprobación.Models
 
         [Column("nit")]
         [StringLength(20, ErrorMessage = "No mayor de 20 caracteres")]
-        [Required(ErrorMessage = "No puede estar vacio")]
-        [Display(Name = "Nit del cliente")]
+        [Required(ErrorMessage = "No puede estar vacio")] [Display(Name = "Nit del cliente")]
         public string NitCliente { get; set; }
+       
 
         [Column("nombre")]
         [StringLength(50, ErrorMessage = "No mayor a 50 caracteres")]

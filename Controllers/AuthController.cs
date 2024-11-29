@@ -31,7 +31,7 @@ namespace Comprobación.Controllers
             }
             return View();
         }
-
+        //explicar esto
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
@@ -62,7 +62,7 @@ namespace Comprobación.Controllers
         {
             return View();
         }
-
+        //explicar esto
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
