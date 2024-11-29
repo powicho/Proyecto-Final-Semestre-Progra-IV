@@ -138,7 +138,7 @@ namespace Comprobación.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdProdcuto,CodigoProducto,NombreProducto,DescripcionProducto,PrecioProducto,StockProducto")] Producto producto, IFormFile? imageFile)
+        public async Task<IActionResult> Edit(int id, [Bind("IdProdcuto,CodigoProducto,NombreProducto,DescripcionProducto,PrecioProducto,StockProducto,FotoProducto")] Producto producto, IFormFile? imageFile)
         {
             if (id != producto.IdProdcuto)
             {
@@ -149,6 +149,7 @@ namespace Comprobación.Controllers
             {
                 try
                 {
+                    // Cargar nueva imagen si se proporciona
                     if (imageFile != null)
                     {
                         var uploadParams = new ImageUploadParams()
@@ -158,6 +159,16 @@ namespace Comprobación.Controllers
                         };
                         var uploadResults = await _cloudinary.UploadAsync(uploadParams);
                         producto.FotoProducto = uploadResults.SecureUrl.ToString();
+                    }
+                    else
+                    {
+                        // Conservar la imagen existente si no se sube una nueva
+                        var productoExistente = await _context.Productos.AsNoTracking()
+                            .FirstOrDefaultAsync(p => p.IdProdcuto == id);
+                        if (productoExistente != null)
+                        {
+                            producto.FotoProducto = productoExistente.FotoProducto;
+                        }
                     }
 
                     _context.Update(producto);
@@ -178,6 +189,7 @@ namespace Comprobación.Controllers
             }
             return View(producto);
         }
+
 
         // GET: Productos/Delete/5
         public async Task<IActionResult> Delete(int? id)

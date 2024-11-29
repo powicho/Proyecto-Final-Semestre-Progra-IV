@@ -10,6 +10,7 @@ namespace Comprobación.Models
 
     public class RegisterViewModel
     {
+
         [Required(ErrorMessage = "El nombre de usuario es requerido")]
         [Display(Name = "Nombre de Usuario")]
         public string Usuario { get; set; }
